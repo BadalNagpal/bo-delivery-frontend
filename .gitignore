@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# MCP and Stitch scratchpad files
+.mcp.json
+screen1.*
+screen_*.json
+
+# Workspace & Agent files
+project.json
+AGENTS.md
