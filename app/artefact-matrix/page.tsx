@@ -2,10 +2,11 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Database, Code, Eye, Sigma, Zap, FileText, Terminal } from "lucide-react";
+import { Database, Code, Eye, Sigma, Zap, FileText, Terminal, Server, Share2 } from "lucide-react";
 
 export default function ArtefactMatrix() {
   const [selected, setSelected] = useState([true, true, true, true, true, true]);
+  const [activeDb, setActiveDb] = useState("PostgreSQL");
 
   const toggleAll = () => {
     const allSelected = selected.every((v) => v);
@@ -109,6 +110,49 @@ export default function ArtefactMatrix() {
               </svg>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Target Database Engine Section */}
+      <div className="mb-8 px-2">
+        <h2 className="text-[16px] font-bold text-gray-900 mb-4 tracking-tight">Target Database Engine</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { name: "PostgreSQL", icon: Database },
+            { name: "Oracle Database", icon: Server },
+            { name: "IBM Db2", icon: Share2 }
+          ].map((db) => {
+            const isActive = activeDb === db.name;
+            const Icon = db.icon;
+            
+            return (
+              <div 
+                key={db.name}
+                onClick={() => setActiveDb(db.name)}
+                className={`bg-white rounded-[16px] p-5 relative shadow-sm cursor-pointer transition-all h-[110px] flex flex-col justify-between ${
+                  isActive 
+                    ? 'border border-[#FF5A36] shadow-[0_4px_15px_rgba(255,90,54,0.08)]' 
+                    : 'border border-gray-100 hover:border-gray-200 hover:shadow-md'
+                }`}
+              >
+                <div className="flex justify-between items-start">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                    isActive ? 'bg-[#FFF0ED] text-[#FF5A36]' : 'bg-[#F4F6F8] text-gray-500'
+                  }`}>
+                    <Icon className="w-4 h-4" strokeWidth={2.5} />
+                  </div>
+                  {isActive && (
+                    <div className="bg-[#FF5A36] text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide">
+                      Active Selection
+                    </div>
+                  )}
+                </div>
+                <div className={`text-[14px] ${isActive ? 'font-bold text-gray-900' : 'font-semibold text-gray-800'}`}>
+                  {db.name}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
