@@ -1,96 +1,195 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { Database, Code, Eye, Sigma, Zap, FileText, Terminal } from "lucide-react";
 
 export default function ArtefactMatrix() {
+  const [selected, setSelected] = useState([true, true, true, true, true, true]);
+
+  const toggleAll = () => {
+    const allSelected = selected.every((v) => v);
+    if (allSelected) {
+      setSelected(selected.map(() => false));
+    } else {
+      setSelected(selected.map(() => true));
+    }
+  };
+
+  const toggleOne = (index: number) => {
+    const newSelected = [...selected];
+    newSelected[index] = !newSelected[index];
+    setSelected(newSelected);
+  };
+
+  const selectedCount = selected.filter(Boolean).length;
+
   const artefacts = [
-    { title: "Tables (DDL/DML)", desc: "Manage database tables, schemas and relationships." },
-    { title: "Procedures", desc: "Stored actions, programs and execution flows." },
-    { title: "Views & Mat Views", desc: "Calculated query projections and cached views." },
-    { title: "Functions", desc: "Calculated SQL logic & math implementations." },
-    { title: "Triggers & Generators", desc: "DB-level reactive triggers and ID generators." },
-    { title: "Pluggable Macros", desc: "Extracted SQL logic blocks and snippets." }
+    { 
+      title: "Database (BO_DDLs)", 
+      desc: "Tables, schemas & indexes",
+      icon: <Database className="w-5 h-5" strokeWidth={2} />
+    },
+    { 
+      title: "Procedures", 
+      desc: "Stored routine wrappers",
+      icon: <Code className="w-5 h-5" strokeWidth={2} />
+    },
+    { 
+      title: "Views & Mat-Views", 
+      desc: "Materialized query projections",
+      icon: <Eye className="w-5 h-5" strokeWidth={2} />
+    },
+    { 
+      title: "Functions", 
+      desc: "Deterministic UDFs & math",
+      icon: <Sigma className="w-5 h-5" strokeWidth={2} />
+    },
+    { 
+      title: "Triggers & Constraints", 
+      desc: "Foreign keys, audit triggers",
+      icon: <Zap className="w-5 h-5 fill-current" strokeWidth={1.5} />
+    },
+    { 
+      title: "Metadata Views", 
+      desc: "Data dictionary & audit types",
+      icon: <FileText className="w-5 h-5" strokeWidth={2} />
+    }
   ];
 
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-6xl mx-auto flex flex-col gap-6"
+      className="max-w-5xl mx-auto w-full px-4 pt-6 pb-20"
     >
-      <div className="flex justify-between items-center bg-transparent py-4">
-        <div className="flex gap-4 items-center">
-          <div>
-            <h1 className="text-2xl font-extrabold mb-1 text-gray-800 tracking-tight">Configure Target & SQL Artefacts</h1>
-          </div>
-          <div className="relative w-12 h-12 ml-4">
-            {/* 3D graphic mockup */}
-            <div className="absolute top-0 right-0 w-8 h-6 bg-[#FFEDE9] rounded shadow-sm border border-[#FF5A36]/20 skew-x-12"></div>
-            <div className="absolute bottom-1 left-1 w-9 h-7 bg-[#FF5A36] rounded shadow-md border border-[#FF5A36] -skew-x-12"></div>
+      {/* Banner */}
+      <div className="relative overflow-hidden rounded-[20px] bg-gradient-to-r from-[#FFF0EC] via-[#F4F9F9] to-[#FCE8E4] px-12 py-14 mb-8">
+        <h1 className="text-[32px] font-extrabold text-gray-900 tracking-tight z-10 relative max-w-lg leading-tight">
+          Configure Target & SQL Artefacts
+        </h1>
+        
+        {/* 3D Illustration Mockup */}
+        <div className="absolute right-12 top-1/2 -translate-y-1/2 w-full md:w-72 h-44 hidden md:flex items-center justify-center">
+          <div className="relative flex items-center justify-center">
+            {/* Database Disks Visual */}
+            <div className="relative flex flex-col items-center">
+              {/* Cylinder Layer 1 */}
+              <div className="w-24 h-9 rounded-full bg-gradient-to-b from-[#ffdad2] to-[#ff5c38] flex items-center justify-center shadow-md">
+                <div className="w-20 h-6 rounded-full bg-[#ff5c38]/80 flex items-center justify-center">
+                  <Database className="w-4 h-4 text-white" />
+                </div>
+              </div>
+              {/* Cylinder Layer 2 */}
+              <div className="-mt-3 w-24 h-9 rounded-full bg-gradient-to-b from-[#ff5c38] to-[#9e422b] flex items-center justify-center shadow-md">
+                <div className="w-20 h-6 rounded-full bg-[#ff5c38]/90"></div>
+              </div>
+              {/* Cylinder Layer 3 */}
+              <div className="-mt-3 w-24 h-9 rounded-full bg-gradient-to-b from-[#9e422b] to-[#5b0d00] flex items-center justify-center shadow-lg">
+                <div className="w-20 h-6 rounded-full bg-[#9e422b]"></div>
+              </div>
+            </div>
+            {/* Floating Script Card Left */}
+            <div className="absolute -left-6 top-2 bg-white rounded-lg p-2.5 shadow-md flex items-center gap-2 transform -rotate-6 hover:rotate-0 transition-transform">
+              <FileText className="w-[18px] h-[18px] text-[#ff5c38]" />
+              <div className="flex flex-col gap-1 w-12">
+                <div className="h-1 bg-[#e3e8f2] rounded-full w-full"></div>
+                <div className="h-1 bg-[#ffdad2] rounded-full w-3/4"></div>
+              </div>
+            </div>
+            {/* Floating Code Badge Right */}
+            <div className="absolute -right-6 bottom-3 bg-white rounded-lg p-2.5 shadow-md flex items-center gap-1.5 transform rotate-6 hover:rotate-0 transition-transform">
+              <Terminal className="w-[20px] h-[20px] text-[#006c49]" />
+              <span className="font-mono text-[12px] text-[#161c23] font-bold">.sql</span>
+            </div>
+            {/* Sparkle accent */}
+            <div className="absolute top-0 right-4 text-[#ff5c38] animate-pulse">
+              <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="surface p-8 bg-white border border-gray-100 shadow-sm rounded-2xl">
-        <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
-          <h3 className="font-bold text-gray-800 flex items-center gap-3 text-[15px]">
-            <span className="w-1.5 h-1.5 bg-[#FF5A36] rounded-sm" />
-            SQL Artefact Matrix
-          </h3>
-          <div className="text-[11px] font-mono text-gray-400 flex items-center gap-2 font-bold tracking-wider">
-            <svg className="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      {/* Main Content Header */}
+      <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 px-2">
+        <div className="flex items-center gap-4">
+          <div className="w-9 h-9 rounded bg-[#FFF0ED] border border-[#FFE4DE] flex items-center justify-center">
+            <svg className="w-[18px] h-[18px] text-[#FF5A36]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1.5" />
+              <rect x="14" y="3" width="7" height="7" rx="1.5" />
+              <rect x="14" y="14" width="7" height="7" rx="1.5" />
+              <rect x="3" y="14" width="7" height="7" rx="1.5" />
             </svg>
-            2026-10-08 11:42
+          </div>
+          <div>
+            <h2 className="text-[20px] font-semibold text-gray-900 tracking-tight">SQL Artefact Matrix</h2>
+            <p className="text-[14px] text-gray-500 font-normal mt-0.5">Manage database definitions, procedures, functions, and metadata bundles</p>
           </div>
         </div>
+        
+        <button 
+          onClick={toggleAll}
+          className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-[13px] font-bold text-gray-600 hover:bg-gray-50 transition-colors shadow-sm"
+        >
+          <svg className="w-[15px] h-[15px] text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+          </svg>
+          {selectedCount === 6 ? "Deselect All" : "Select All"}
+        </button>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
-          {artefacts.map((item, i) => {
-            const isChecked = i < 4;
-            return (
-              <motion.label 
-                whileHover={{ scale: 1.01 }}
-                key={i} 
-                className={`flex items-start gap-4 p-5 rounded-2xl transition-all border cursor-pointer group ${
-                  isChecked ? 'bg-white border-transparent shadow-[0_4px_15px_rgba(0,0,0,0.03)]' : 'bg-transparent border-transparent hover:bg-gray-50'
-                }`}
-              >
-                <div className="pt-0.5">
-                  <div className={`w-5 h-5 rounded-[4px] border flex items-center justify-center transition-colors ${
-                    isChecked ? 'bg-[#FF5A36] border-[#FF5A36]' : 'bg-white border-gray-300 group-hover:border-[#FF5A36]'
-                  }`}>
-                    {isChecked && (
-                      <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
-                  </div>
+      {/* Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 px-2">
+        {artefacts.map((item, i) => {
+          const isChecked = selected[i];
+          return (
+            <div 
+              key={i} 
+              onClick={() => toggleOne(i)}
+              className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center justify-between cursor-pointer hover:border-gray-300 hover:shadow-md transition-all"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-xl bg-[#F4F6F8] flex items-center justify-center text-gray-700">
+                  {item.icon}
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-gray-800 text-[13px] mb-1">
-                    {item.title}
-                  </h4>
-                  <p className="text-[12px] text-gray-500 leading-relaxed font-medium">{item.desc}</p>
+                  <h3 className="text-[16px] font-semibold text-gray-900 mb-0.5">{item.title}</h3>
+                  <p className="text-[13px] text-gray-500 font-normal">{item.desc}</p>
                 </div>
-              </motion.label>
-            );
-          })}
-        </div>
+              </div>
+              
+              <div className={`w-[22px] h-[22px] rounded-md border-[1.5px] flex items-center justify-center transition-colors ${
+                isChecked ? 'bg-[#FF5A36] border-[#FF5A36]' : 'bg-transparent border-gray-300'
+              }`}>
+                {isChecked && (
+                  <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      <div className="flex justify-between items-center mt-4">
-        <div className="flex items-center gap-2 text-xs font-bold text-[#2ECA6A]">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#2ECA6A] animate-pulse"></div>
-          4 Artefact types selected
+      {/* Footer */}
+      <div className="flex items-center justify-between px-2">
+        <div className="flex items-center gap-2">
+          <div className="w-[7px] h-[7px] rounded-full bg-[#10B981]"></div>
+          <span className="text-[12px] font-bold text-gray-700">{selectedCount} of 6 Artefacts Selected</span>
         </div>
-        <motion.button 
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="bg-[#FF5A36] text-white px-8 py-3 rounded-full font-bold hover:bg-[#E54D2B] shadow-lg shadow-[#FF5A36]/20 transition-all flex items-center gap-2 text-[13px]"
-        >
-          Generate Artefacts Matrix &rarr;
-        </motion.button>
+        
+        <button className="bg-[#FF5A36] text-white px-6 py-3 rounded-full text-[13.5px] font-bold hover:bg-[#E54D2B] transition-colors shadow-lg shadow-[#FF5A36]/25 flex items-center gap-2">
+          Continue to Artefact Matrix
+          <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
       </div>
     </motion.div>
   );

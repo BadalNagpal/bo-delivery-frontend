@@ -1,101 +1,114 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, ArrowDownToLine } from "lucide-react";
+import Link from "next/link";
+import { CheckCircle2, ArrowDownToLine, Landmark, Home } from "lucide-react";
 
 export default function ReceiptGenerator() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] gap-6 pb-12 relative z-10">
+    <div className="flex flex-col items-center justify-center min-h-[85vh] gap-4 pb-16 pt-4 relative z-10 max-w-5xl mx-auto">
       
+      {/* Top Generated Badge */}
       <motion.div 
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="flex items-center gap-2 text-[#2ECA6A] bg-[#2ECA6A]/10 px-4 py-1.5 rounded-full font-bold text-xs"
+        className="flex items-center gap-1.5 text-white bg-[#10B981] px-4 py-1.5 rounded-full font-bold text-[13px] shadow-sm mb-2"
       >
-        <CheckCircle2 size={14} strokeWidth={3} />
+        <CheckCircle2 size={16} strokeWidth={2.5} />
         Generated
       </motion.div>
 
+      {/* Receipt Card */}
       <motion.div 
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 100, delay: 0.1 }}
-        className="w-[420px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.06)] relative drop-shadow-sm pb-8"
+        className="w-[440px] bg-white rounded-t-xl relative drop-shadow-[0_15px_35px_rgba(0,0,0,0.06)] pb-10"
       >
-        <div className="receipt-edge absolute top-[-10px] left-0 drop-shadow-sm"></div>
+        {/* Soft orange top border */}
+        <div className="absolute top-0 left-0 right-0 h-[6px] bg-[#FFF0EC] rounded-t-xl"></div>
         
-        <div className="px-10 pt-12 pb-6 flex flex-col items-center">
+        <div className="pt-12 px-10 flex flex-col items-center">
           
-          <div className="relative w-12 h-12 mb-4 flex items-center justify-center">
-            <div className="absolute top-1 right-2 w-5 h-5 bg-[#FF5A36]/20 rounded border border-[#FF5A36]"></div>
-            <div className="absolute bottom-2 left-2 w-6 h-6 bg-[#FF5A36] rounded shadow-sm flex items-center justify-center text-white">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-          </div>
-
-          <h2 className="font-extrabold text-gray-800 text-[15px] tracking-widest text-center uppercase">DEPLOYMENT RECEIPT</h2>
-          <div className="text-[10px] text-gray-500 font-bold tracking-wider mt-1 mb-8">
-            Task ID: DEP-2026-10-08-992
+          <div className="text-[#FF5A36] mb-3">
+             <Landmark size={28} strokeWidth={2} />
           </div>
           
-          <div className="w-full border-b-[1.5px] border-dashed border-gray-200 mb-6"></div>
+          <h2 className="font-extrabold text-gray-900 text-[18px] tracking-wide text-center uppercase">RAND MERCHANT BANK</h2>
+          <div className="text-[12px] text-gray-500 font-semibold tracking-[0.15em] mt-1 mb-8 uppercase">
+            SQL ARTEFACT DELIVERY
+          </div>
           
-          <div className="w-full space-y-4 px-2">
-            {[
-              { name: "Target Client", val: "Rand Merchant Bank", color: "text-[#FF5A36]" },
-              { name: "Environment", val: "PROD-VAULT", color: "text-[#2ECA6A]" }
-            ].map((row, i) => (
-              <div key={i} className="flex items-center justify-between text-[11px] font-bold">
-                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#FF5A36] rounded-full"></div>
-                  <span className="text-gray-500 uppercase">{row.name}</span>
+          <div className="w-full bg-[#F5F7F9] rounded-lg p-4 flex items-center justify-between mb-8 font-mono text-[12px] font-bold text-gray-700">
+             <span>DATE</span>
+             <span>08 OCT 2025, 14:32</span>
+          </div>
+          
+          <div className="w-full border-b-[2px] border-dashed border-gray-200 mb-6"></div>
+          
+          <div className="w-full space-y-3 px-1">
+             {[
+               "BO_DDLs (Tables)",
+               "Stored Procedures",
+               "Custom Types",
+               "Functions & Views"
+             ].map((item, i) => (
+                <div key={i} className="flex items-center justify-between">
+                   <div className="flex items-center gap-3">
+                      <div className="w-[5px] h-[5px] rounded-full bg-[#FF5A36]"></div>
+                      <span className="font-mono text-[13px] font-semibold text-gray-700">{item}</span>
+                   </div>
+                   <div className="bg-[#10B981] text-white px-2 py-0.5 rounded text-[11px] font-bold tracking-wider">OK</div>
                 </div>
-                <span className={row.color}>{row.val}</span>
-              </div>
-            ))}
-            
-            <div className="w-full border-b border-gray-100 my-4"></div>
-            
-            <div className="space-y-3 pt-2">
-              {[
-                "Tables (DDL/DML)",
-                "Procedures",
-                "Views & Mat Views",
-                "Functions"
-              ].map((name, i) => (
-                <div key={i} className="flex items-center justify-between text-[11px] font-bold">
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-400">&bull;</span>
-                    <span className="text-gray-700">{name}</span>
-                  </div>
-                  <div className="text-[#2ECA6A]">
-                    <CheckCircle2 size={14} strokeWidth={3} />
-                  </div>
-                </div>
-              ))}
-            </div>
+             ))}
           </div>
           
-          <div className="w-full border-b-[1.5px] border-dashed border-gray-200 mt-8 mb-6"></div>
-          
-          <button className="bg-white border border-gray-200 text-[#2ECA6A] px-6 py-2 rounded-full font-bold hover:bg-gray-50 transition-all flex items-center gap-2 text-xs shadow-sm">
-            <ArrowDownToLine size={14} strokeWidth={2.5} />
-            Download
-          </button>
+          <div className="w-full border-b-[2px] border-dashed border-gray-200 mt-6 mb-2"></div>
         </div>
 
-        <div className="receipt-edge-bottom absolute bottom-[-10px] left-0 drop-shadow-sm"></div>
+        {/* Zig-zag bottom */}
+        <div 
+          className="absolute bottom-[-8px] left-0 right-0 h-[8px]" 
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='16' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,0 8,8 16,0' fill='white'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat-x'
+          }}
+        ></div>
       </motion.div>
 
-      <motion.button 
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="bg-[#FF5A36] text-white px-12 py-3 rounded-full font-bold hover:bg-[#E54D2B] shadow-xl shadow-[#FF5A36]/30 transition-all mt-4 text-xs tracking-wide"
-      >
+      {/* Pagination dots */}
+      <div className="flex items-center gap-2 mt-6 mb-2">
+        <div className="w-[7px] h-[7px] rounded-full bg-[#FF5A36]"></div>
+        <div className="w-[7px] h-[7px] rounded-full bg-gray-200"></div>
+        <div className="w-[7px] h-[7px] rounded-full bg-gray-200"></div>
+        <div className="w-[7px] h-[7px] rounded-full bg-gray-200"></div>
+        <div className="w-[7px] h-[7px] rounded-full bg-gray-200"></div>
+      </div>
+
+      {/* Download button */}
+      <button className="bg-white text-gray-800 px-6 py-2.5 rounded-full font-bold shadow-sm flex items-center gap-2 text-[13.5px] border border-gray-100 hover:bg-gray-50 transition-colors mt-2 mb-2">
+        <ArrowDownToLine size={16} strokeWidth={2.5} />
+        Download
+      </button>
+
+      {/* File tags */}
+      <div className="flex flex-wrap items-center justify-center gap-3 mt-2 max-w-[500px]">
+        {['BO_DDLs.zip', 'PROCEDURES.zip', 'TYPES.zip', 'VIEWS.zip'].map((tag, i) => (
+          <div key={i} className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-gray-100">
+            <svg className="w-[14px] h-[14px] text-[#FF5A36]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+            </svg>
+            <span className="font-mono text-[11px] font-bold text-gray-700 tracking-tight">{tag}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Back to Home Button */}
+      <Link href="/" className="w-full max-w-[460px] bg-[#FF5A36] text-white py-3.5 rounded-full font-bold text-[15px] shadow-[0_8px_20px_rgba(255,90,54,0.3)] hover:bg-[#E54D2B] transition-colors flex items-center justify-center gap-2 mt-4">
+        <Home size={18} strokeWidth={2.5} />
         Back to Home
-      </motion.button>
+      </Link>
+
     </div>
   );
 }
