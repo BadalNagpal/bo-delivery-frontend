@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   // Emit each route as a directory containing index.html (for example,
   // /receipt-generator/index.html), which Tomcat can serve directly.
   trailingSlash: true,
+  basePath: "/bo-delivery-test",
 
   experimental: {
     agentFeedback: true,
