@@ -14,7 +14,6 @@ export default function Footer() {
             <span className="w-2 h-2 rounded-full bg-secondary"></span>
             <span>All systems nominal</span>
           </div>
-          <div className="text-on-surface-variant font-body-sm text-body-sm">© 2025 NEXUS Engine.</div>
         </div>
       </div>
     </footer>

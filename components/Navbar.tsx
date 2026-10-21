@@ -8,7 +8,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navItems = [
-    { path: "/", label: "Client Stack", num: "1" },
+    { path: "/client-stack", label: "Client Stack", num: "1" },
     { path: "/file-drop-hoops", label: "File Drop Hoops", num: "2" },
     { path: "/artefact-matrix", label: "Artefact Matrix", num: "3" },
     { path: "/receipt-generator", label: "Receipt Generator", num: "4" }
