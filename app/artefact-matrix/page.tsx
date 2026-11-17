@@ -27,7 +27,7 @@ const ARTEFACT_CONFIG: Record<number, Record<EngineKey, ArtefactRule>> = {
   },
   2: {
     postgres: { enabled: true },
-    oracle: { enabled: false, note: "Not applicable for Oracle Database (uses PL/SQL package records)" },
+    oracle: { enabled: false, note: "Not applicable for Oracle Database" },
     db2: { enabled: true },
   },
   3: {
@@ -37,10 +37,20 @@ const ARTEFACT_CONFIG: Record<number, Record<EngineKey, ArtefactRule>> = {
   },
   4: {
     postgres: { enabled: true },
-    oracle: { enabled: false, note: "Not applicable for Oracle Database (handled via native FORALL)" },
-    db2: { enabled: false, note: "Not applicable for IBM Db2" },
+    oracle: { enabled: false, note: "Not applicable for Oracle" },
+    db2: { enabled: false, note: "Not applicable for Db2" },
   },
   5: {
+    postgres: { enabled: true },
+    oracle: { enabled: true },
+    db2: { enabled: true },
+  },
+  13: {
+    postgres: { enabled: true },
+    oracle: { enabled: true },
+    db2: { enabled: true },
+  },
+  14: {
     postgres: { enabled: true },
     oracle: { enabled: true },
     db2: { enabled: true },
@@ -63,22 +73,22 @@ const ARTEFACT_CONFIG: Record<number, Record<EngineKey, ArtefactRule>> = {
   9: {
     postgres: { enabled: true },
     oracle: { enabled: true },
-    db2: { enabled: false, note: "Not applicable for IBM Db2 (uses TargetDB_FunctionDB2)" },
+    db2: { enabled: false, note: "Not applicable for Db2 (uses TargetDB_FunctionDB2)" },
   },
   10: {
     postgres: { enabled: false, note: "Not applicable for PostgreSQL" },
-    oracle: { enabled: false, note: "Not applicable for Oracle Database" },
+    oracle: { enabled: false, note: "Not applicable for Oracle" },
     db2: { enabled: true },
   },
   11: {
     postgres: { enabled: false, note: "Not applicable for PostgreSQL (uses logical replication)" },
     oracle: { enabled: true },
-    db2: { enabled: false, note: "Not applicable for IBM Db2" },
+    db2: { enabled: false, note: "Not applicable for Db2" },
   },
   12: {
     postgres: { enabled: false, note: "Not applicable for PostgreSQL (no NOLOGGING syntax)" },
     oracle: { enabled: true },
-    db2: { enabled: false, note: "Not applicable for IBM Db2" },
+    db2: { enabled: false, note: "Not applicable for Db2" },
   },
 };
 
@@ -117,6 +127,20 @@ const ARTEFACT_ITEMS: ArtefactItem[] = [
     title: "Driver Table & Sequences",
     code: "TargetDB_BI_DRIVER",
     config: ARTEFACT_CONFIG[5],
+  },
+  {
+    id: 13,
+    icon: "key",
+    title: "Static & System Codes",
+    code: "TargetDB_BI_STATIC_SQL",
+    config: ARTEFACT_CONFIG[13],
+  },
+  {
+    id: 14,
+    icon: "list_alt",
+    title: "Indexes",
+    code: "TargetDB_IDX",
+    config: ARTEFACT_CONFIG[14],
   },
   {
     id: 6,
@@ -388,7 +412,7 @@ export default function ArtefactMatrix() {
             </div>
           </div>
 
-          {/* SQL Artefacts Interactive Grid (12 Items) */}
+          {/* SQL Artefacts Interactive Grid (14 Items) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md" id="matrix-cards-grid">
             {ARTEFACT_ITEMS.map((item) => {
               const rule = item.config[currentEngine];

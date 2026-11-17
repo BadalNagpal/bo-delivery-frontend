@@ -159,14 +159,6 @@ export default function AuthPage({ initialMode = "login" }: { initialMode?: "log
                 <label className="text-xs font-semibold text-[#0f172a] uppercase tracking-wider">
                   Password
                 </label>
-                {authMode === "login" && (
-                  <a
-                    className="text-xs font-semibold text-[#ff5c38] hover:text-[#e1745a] transition-colors duration-150"
-                    href="#"
-                  >
-                    Forgot password?
-                  </a>
-                )}
               </div>
               <div className="relative flex items-center">
                 <span className="material-symbols-outlined absolute left-3.5 text-[#94a3b8] text-[20px] pointer-events-none">
